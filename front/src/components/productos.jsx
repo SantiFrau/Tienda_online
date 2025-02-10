@@ -1,10 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { get_prods } from "../get_prod";
 import ProdSelected from "./selectProduct";
+import { UserContext } from "./context";
+import { useNavigate } from "react-router-dom";
 export default function Products({categoria}){
 
     const [productos, setProductos] = useState([]);
     const [prodSelected, setProdSelected] = useState(false);
+    const {user} = useContext(UserContext);
+    let navigate = useNavigate()
+
+    useEffect(()=>{
+        if(!user){
+           navigate("/")
+        }
+    },[])
    
     const productosFiltrados =
     categoria === "all"

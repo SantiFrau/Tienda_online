@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { get_users } from "../get_prod";
+import { UserContext } from "./context";
+import { useNavigate } from "react-router";
 
 export default function Login() {
     const [error, setError] = useState(false);
     const [usuarios, setUsuarios] = useState([]); // Guardamos los usuarios en el estado
+    const {user,setUser} = useContext(UserContext)
+    let navigate = useNavigate();
 
     useEffect(() => {
         async function fetchUsers() {
@@ -12,6 +16,13 @@ export default function Login() {
             console.log(data)
         }
         fetchUsers();
+
+        if(localStorage.getItem("user")){
+            const storedUser = localStorage.getItem("user");
+            const initialUser =JSON.parse(storedUser)
+            setUser(initialUser);
+            navigate("/products")
+        }
     }, []);
 
     function handleClick() {
@@ -23,6 +34,9 @@ export default function Login() {
         if (user && user.password === password) {
             console.log("Login exitoso");
             setError(false)
+            setUser(user)
+            localStorage.setItem("user", JSON.stringify(user));
+            navigate("/products");
         } else {
             setError(true);
         }

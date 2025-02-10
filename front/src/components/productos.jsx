@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { get_prods } from "../get_prod";
-export default function Products({categoria ,setProdSelected}){
+import ProdSelected from "./selectProduct";
+export default function Products({categoria}){
 
     const [productos, setProductos] = useState([]);
+    const [prodSelected, setProdSelected] = useState(false);
    
     const productosFiltrados =
     categoria === "all"
@@ -18,9 +20,9 @@ export default function Products({categoria ,setProdSelected}){
         get();
       }, []);
    
-    return(
+    return( <>
     
-        productosFiltrados ? (
+        {productosFiltrados ? (
         <div className="bg-gray-300 w-2/3 flex items-center justify-center gap-5 flex-wrap p-5 py-30">
           {productosFiltrados.map((prod) => {
             return (
@@ -36,7 +38,12 @@ export default function Products({categoria ,setProdSelected}){
             );
           })}
         </div>
-      ) : undefined
+      ) : undefined}
+
+      <ProdSelected prodSelected={prodSelected} setProdSelected={setProdSelected}></ProdSelected>
+
+
+      </>
   )
     
 }

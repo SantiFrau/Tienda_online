@@ -1,8 +1,9 @@
 import { useEffect,useState } from "react";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { get_categories } from "../get_prod";
+import { Outlet } from "react-router-dom";
 
-export default function Nav({categoria , setCategoria}){
+export default function Layout({categoria , setCategoria}){
 
     const [categorias, setCategorias] = useState([]);
 
@@ -16,7 +17,7 @@ export default function Nav({categoria , setCategoria}){
         get()
     },[])
 
-    return (
+    return (<>
         <nav className="w-full bg-gray-800 fixed p-2 top-0 left-0 flex flex-row justify-between items-center">
           <div className="w-1/3 p-2">
             <select
@@ -43,5 +44,9 @@ export default function Nav({categoria , setCategoria}){
             </div>
           </div>
         </nav>
+
+         <Outlet />
+
+         </>
     )
 }

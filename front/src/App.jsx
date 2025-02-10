@@ -1,39 +1,30 @@
 import { useState } from "react";
 
 import { Routes, Route } from "react-router";
-import Nav from "./components/nav";
+import Layout from "./components/layout";
 import Products from "./components/productos";
-import ProdSelected from "./components/selectProduct";
+import Login from "./components/login";
+
 
 function App() {
   const [categoria,setCategoria] = useState("all")
-  const [prodSelected, setProdSelected] = useState(false);
-
   
 
- 
-
-
   
-
-
-
-
  
 
   return (
     <>
-      <div className="w-full flex items-center justify-center flex-col ">
+    <Routes>
 
-         <Nav categoria={categoria} setCategoria={setCategoria}></Nav>
+       <Route element={<Layout categoria={categoria} setCategoria={setCategoria}></Layout>} path="/">
+          
+          <Route index element={<Login></Login>}></Route>
+          <Route path="/products" element={<Products categoria={categoria}></Products>}></Route>
 
-        <Products categoria={categoria } setProdSelected={setProdSelected}></Products>
-
-
-
-        <ProdSelected prodSelected={prodSelected} setProdSelected={setProdSelected}></ProdSelected>
-
-      </div>
+       </Route>
+      
+      </Routes>
     </>
   );
 }

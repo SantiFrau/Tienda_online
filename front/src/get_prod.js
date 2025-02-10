@@ -13,3 +13,9 @@ export function get_categories(){
     .then(res=>res.json())
     .then(json=>json)
 }
+
+export function get_users(){
+   return fetch('https://fakestoreapi.com/users')
+            .then(res=>res.json())
+            .then(json=>json)
+}

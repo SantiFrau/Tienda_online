@@ -20,9 +20,9 @@ export default function ProdSelected({prodSelected,setProdSelected}){
    
     return (
         prodSelected ? (
-            <div className="w-full h-screen fixed left-0 top-0 bg-black/75 flex items-center justify-center" onClick={() => { setProdSelected(false); }}>
+            <div className="w-full h-screen fixed left-0 top-0 bg-black/75 flex items-center justify-center z-20" onClick={() => { setProdSelected(false); }}>
               
-              <div className="overflow-y-auto w-1/2 bg-white h-9/10 rounded-lg transition-all">
+              <div className="overflow-y-auto w-1/2 bg-white h-9/10 rounded-lg transition-all ">
                 
                 <div className="w-full h-max flex flex-col items-center justify-center gap-10 py-10">
                   

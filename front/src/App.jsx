@@ -9,7 +9,7 @@ import Notfound from "./components/NotFound";
 
 
 function App() {
-  const [categoria,setCategoria] = useState("all")
+ 
   
 
   
@@ -20,10 +20,12 @@ function App() {
     <UserProvider>
     <Routes>
 
-       <Route element={<Layout categoria={categoria} setCategoria={setCategoria}></Layout>} path="/">
+       <Route path="/" index element={<Login></Login>}></Route>
+
+       <Route element={<Layout ></Layout>} path="/products">
           
-          <Route index element={<Login></Login>}></Route>
-          <Route path="/products" element={<Products categoria={categoria}></Products>}></Route>
+          
+          <Route index element={<Products></Products>}></Route>
           <Route path="*" element={<Notfound></Notfound>}></Route>
 
        </Route>

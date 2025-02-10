@@ -3,11 +3,11 @@ import { get_prods } from "../get_prod";
 import ProdSelected from "./selectProduct";
 import { UserContext } from "./context";
 import { useNavigate } from "react-router-dom";
-export default function Products({categoria}){
+export default function Products(){
 
     const [productos, setProductos] = useState([]);
     const [prodSelected, setProdSelected] = useState(false);
-    const {user} = useContext(UserContext);
+    const {user,categoria} = useContext(UserContext);
     let navigate = useNavigate()
 
     useEffect(()=>{
@@ -33,7 +33,7 @@ export default function Products({categoria}){
     return( <>
     
         {productosFiltrados ? (
-        <div className="bg-gray-300 w-2/3 flex items-center justify-center gap-5 flex-wrap p-5 py-30">
+        <div className="bg-gray-300 w-full flex items-center justify-center gap-5 flex-wrap p-5 py-30">
           {productosFiltrados.map((prod) => {
             return (
               <div

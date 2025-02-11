@@ -6,6 +6,7 @@ import Products from "./components/productos";
 import Login from "./components/login";
 import { UserProvider } from "./components/context";
 import Notfound from "./components/NotFound";
+import User from "./components/user";
 
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
           
           
           <Route index element={<Products></Products>}></Route>
+          <Route path="user" element={<User></User>}></Route>
+          <Route path="cart"></Route>
           <Route path="*" element={<Notfound></Notfound>}></Route>
 
        </Route>

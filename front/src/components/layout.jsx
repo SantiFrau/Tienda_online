@@ -8,6 +8,7 @@ import Footer from "./footer";
 import { get_categories } from "../get_prod";
 import MenuIcon from '@mui/icons-material/Menu';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import { NavLink } from "react-router-dom";
 
 export default function Layout() {
 
@@ -50,7 +51,11 @@ export default function Layout() {
                   <div className={`${menu ? "flex" : "hidden"} transition-all flex-col gap-2 bg-gray-800 absolute top-0 right-0 w-full`}>
                     <ul className="flex flex-col items-center justify-center gap-5">
                         <li className="p-2 text-white" onClick={()=>{setMenu(!menu)}}><MenuIcon fontSize="large"></MenuIcon></li>
-                    <li className="p-2"> <div className=" font-bold text-xl bg-white p-3 rounded-full"><InventoryIcon></InventoryIcon><span className="p-2">Products</span></div> </li>
+                    <li className="p-2"> 
+                    <NavLink to="/products" className={({ isActive }) =>isActive ? "active" : ""}>
+                    <div className=" font-bold text-xl bg-white p-3 rounded-full"><InventoryIcon></InventoryIcon><span className="p-2">Products</span></div> 
+                    </NavLink>
+                    </li>
                     <li className="p-2"><div className="flex flex-row items-center justify-center gap-2 bg-white p-5 rounded-full">
                     <h3 className=" font-bold text-xl">Filtros:</h3>
                       <select
@@ -69,11 +74,15 @@ export default function Layout() {
                       <ShoppingCartIcon /> <span className="text-xl px-2">Cart</span>
                   </div></li>
                     
-                    <li className="p-2"><div className="text-white w-full flex flex-row gap-3 items-center justify-center">
+                    
+                    <li className="p-2">
+                    <NavLink to="/products/user" className={({ isActive }) =>isActive ? "active" : ""}>
+                        <div className="text-white w-full flex flex-row gap-3 items-center justify-center">
                       <Person2Icon fontSize="large" />
                       {/* Solo mostramos el username si 'user' no es undefined */}
                       <p className="text-bold text-2xl">{user ? user.username : "Cargando..."}</p>
                     </div>
+                    </NavLink>
                     </li>
                 </ul>
               </div>
@@ -91,8 +100,9 @@ export default function Layout() {
                 <div className="flex flex-col gap-5 items-center justify-center">
 
                     
-                
+                <NavLink to="/products" className={({ isActive }) =>isActive ? "active" : ""}>
                   <div className=" font-bold text-xl bg-white p-3 rounded-full"><InventoryIcon></InventoryIcon><span className="p-2">Products</span></div>
+                  </NavLink>
                   <div className="flex flex-col items-center justify-center gap-2 bg-white p-3 pb-5 rounded-full">
                     <h3 className=" font-bold text-xl">Filtros</h3>
                       <select
@@ -120,11 +130,15 @@ export default function Layout() {
                   </div>
                   </div>
 
-                    <div className="text-white w-full flex flex-row gap-3 items-center justify-center">
+                  <NavLink to="/products/user" className={({ isActive }) =>isActive ? "active" : ""}>
+                  <div className="text-white w-full flex flex-row gap-3 items-center justify-center hover:border-b-3 border-gray-200 cursor-pointer">
                       <Person2Icon fontSize="large" />
                       {/* Solo mostramos el username si 'user' no es undefined */}
                       <p className="text-bold text-2xl">{user ? user.username : "Cargando..."}</p>
                     </div>
+                  </NavLink>
+
+                    
                   
               </div>
             </div>

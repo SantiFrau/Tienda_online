@@ -22,7 +22,9 @@ export default function ProdSelected({prodSelected,setProdSelected}){
         prodSelected ? (
             <div className="w-full h-screen fixed left-0 top-0 bg-black/75 flex items-center justify-center z-20" onClick={() => { setProdSelected(false); }}>
               
-              <div className="overflow-y-auto w-1/2 bg-white h-9/10 rounded-lg transition-all ">
+              <div onClick={(e)=>{e.stopPropagation()}} className="overflow-y-auto md:w-2/3 w-9/10 lg:w-1/2 bg-white h-9/10 rounded-lg transition-all relative">
+
+                <div onClick={()=>{setProdSelected(false)}} className='text-xl cursor-pointer rounded-sm font-bold absolute top-0 right-0 p-5 hover:bg-gray-200 '>X</div>
                 
                 <div className="w-full h-max flex flex-col items-center justify-center gap-10 py-10">
                   

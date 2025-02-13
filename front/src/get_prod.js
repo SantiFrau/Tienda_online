@@ -19,3 +19,16 @@ export function get_users(){
             .then(res=>res.json())
             .then(json=>json)
 }
+
+
+export function get_cart(id){
+    return fetch(`https://fakestoreapi.com/carts/user/${id}`)
+    .then(res=>res.json())
+    .then(json=>json)
+}
+
+export function get_prod(id){
+    return fetch(`https://fakestoreapi.com/products/${id}`)
+    .then(res=>res.json())
+    .then(json=>json)
+}

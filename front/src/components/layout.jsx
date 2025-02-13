@@ -74,9 +74,11 @@ export default function Layout() {
                                 </div>
                             </li>
                             <li className="p-2">
+                            <NavLink to="/products/cart" className={({ isActive }) => (isActive ? "active" : "")}>
                                 <div className="bg-white rounded-full p-3 hover:bg-gray-200 hover:outline-2 outline-gray-500">
                                     <ShoppingCartIcon /> <span className="text-xl px-2">Cart</span>
                                 </div>
+                                </NavLink>
                             </li>
                             <li className="p-2">
                                 <NavLink to="/products/user" className={({ isActive }) => (isActive ? "active" : "")}>  
@@ -117,9 +119,11 @@ export default function Layout() {
                     </div>
                     <div className="flex flex-col gap-3 items-center justify-center">
                         <div className="flex justify-end items-center p-2">
+                        <NavLink to="/products/cart" className={({ isActive }) => (isActive ? "active" : "")}>
                             <div className="bg-white rounded-full p-3 hover:bg-gray-200 hover:outline-2 outline-gray-500">
                                 <ShoppingCartIcon /> <span className="text-xl px-2">Cart</span>
                             </div>
+                            </NavLink>
                         </div>
                         <NavLink to="/products/user" className={({ isActive }) => (isActive ? "active" : "")}>  
                             <div className="text-white w-full flex flex-row gap-3 items-center justify-center">

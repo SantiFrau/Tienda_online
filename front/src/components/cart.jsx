@@ -41,7 +41,7 @@ export default function Cart() {
                     {cart.map((cItem, index) => {
                         let totalPedido = 0; // <-- Total por cada pedido
                         return (
-                            <div className="w-full flex flex-col gap-5 p-10" key={index}>
+                            <div className="w-full flex flex-col gap-5 md:p-10" key={index}>
                                 <h5 className="w-full text-center font-bold text-xl">
                                     Pedido: {cItem.id}
                                 </h5>
@@ -53,15 +53,15 @@ export default function Cart() {
                                     return product ? (
                                         <div
                                             key={i}
-                                            className="w-full font-bold h-30 bg-white flex flex-row rounded-r-2xl justify-between p-5 items-center"
+                                            className="w-full font-bold h-30 gap-2 bg-white flex flex-row rounded-r-2xl justify-between p-5 items-center"
                                         >
                                             <img className="h-full w-max" src={product.image} alt={product.title} />
-                                            <p className="max-w-1/2">{product.title}</p>
+                                            <p className="max-w-1/2 h-full overflow-hidden whitespace-nowrap ">{product.title}</p>
                                             <div className="flex flex-col items-center">
                                                 <p>Quantity</p>
                                                 <p>{prod.quantity}</p>
                                             </div>
-                                            <p className="text-green-600">${product.price}</p>
+                                            <p className="text-green-600 md:block hidden">${product.price}</p>
                                             <div className="flex flex-col items-center">
                                                 <p>Total</p>
                                                 <p className="text-green-600">${totalProducto}</p>

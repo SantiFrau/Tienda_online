@@ -105,6 +105,3 @@ export default class ProductModel {
     }
 }
 }
-
-
-ProductModel.Get_limit({limit:10,page:1})

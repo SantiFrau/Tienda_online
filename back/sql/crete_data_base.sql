@@ -110,7 +110,7 @@ CREATE TABLE Cart_items (
     product_id INT NOT NULL,
     quantity INT NOT NULL,
     FOREIGN KEY (cart_id) REFERENCES carts(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES productsproducts(id) ON DELETE CASCADE
 );
 
 -- Insertar el primer carrito 

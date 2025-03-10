@@ -1,7 +1,7 @@
 
 export default class CartController{
-    constructor({ModelApp}){
-        this.Model = ModelApp
+    constructor({AppModel}){
+        this.Model = AppModel.CartModel
     }
 
     Get_by_user_id(){

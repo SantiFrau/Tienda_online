@@ -1,4 +1,11 @@
 import CreateApp from "./index.js";
-const model ={}
+import UsersModel from "./model/UsersModel.js";
+import CartModel from "./model/CartModel.js";
+import ProductModel from "./model/ProdutModel.js";
+const AppModel ={
+    UsersModel,
+    CartModel,
+    ProductModel
+}
 
-CreateApp({AppModel:model})
+CreateApp({AppModel:AppModel})

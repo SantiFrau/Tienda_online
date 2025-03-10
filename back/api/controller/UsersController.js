@@ -2,8 +2,8 @@
 
 
 export default class UsersController{
-    constructor({ModelApp}){
-        this.Model=ModelApp
+    constructor({AppModel}){
+        this.Model=AppModel.UsersModel
     }
 
     GetAll(){

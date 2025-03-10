@@ -1,8 +1,8 @@
 
 
 export default class ProductController{
-    constructor({ModelApp}){
-        this.Model=ModelApp
+    constructor({AppModel}){
+        this.Model=AppModel.ProductModel
     }
 
     GetAll(){

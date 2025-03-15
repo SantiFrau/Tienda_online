@@ -104,4 +104,18 @@ export default class ProductModel {
         return { Error: "Error en la query a la bd", success: false };
     }
 }
+
+static async SearchProducts({ search }) {
+  try {
+      const values = [`%${search}%`]; // Agrega % para buscar coincidencias parciales
+
+      const [res] = await conection.query(`SELECT * FROM products WHERE title LIKE ?`, values);
+
+      return { success: true, data: res };
+  } catch (error) {
+    
+
+      return { success: false, Error: "Error searching products" };
+  }
+}
 }

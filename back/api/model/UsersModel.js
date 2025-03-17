@@ -22,7 +22,11 @@ export default class UsersModel{
         if(res.length<1){
            
            return {Error:"Usuario no encontrado",succes:false}
+        } else{
+            return {data:"Usuario existente",succes:true}
         }
+     
+      //funcion modifcada pra que solo devuelva si existe el ususario
 
         const [addres] = await conection.query(`
         SELECT 
@@ -66,14 +70,21 @@ export default class UsersModel{
       
             // Generar un token JWT
             const token = jwt.sign(
-                { id: user.id, email: user.email }, 
-               secret_var, //usar una calve o firma para que no alteren el token y validarlo con esto en lo posible se usa una variable de entorno
-                { expiresIn: "2h" } // Expira en 2 horas
+                { 
+                    id: user.id, 
+                    email: user.email, 
+                    username: user.username, 
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    phone: user.phone
+                }, 
+                secret_var, 
+                { expiresIn: "2h" }
             );
           
             delete user.password
            
-           return {data:user,token,succes:true}
+           return {token,succes:true}
         }
         catch{
             return {Error:"Error en la consulta",succes:false}
@@ -100,22 +111,29 @@ export default class UsersModel{
             // Comparar la contraseña con la almacenada en la DB
             const passwordMatch = await argon2.verify(user.password, password);
             if (!passwordMatch) {
-                return { error: "Contraseña incorrecta", success: false };
+                return { Error: "Contraseña incorrecta", success: false };
             }
     
             // Generar un token JWT
             const token = jwt.sign(
-                { id: user.id, email: user.email }, 
-               secret_var, //usar una calve o firma para que no alteren el token y validarlo con esto en lo posible se usa una variable de entorno
-                { expiresIn: "2h" } // Expira en 2 horas
+                { 
+                    id: user.id, 
+                    email: user.email, 
+                    username: user.username, 
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    phone: user.phone
+                }, 
+                secret_var, 
+                { expiresIn: "2h" }
             );
     
             delete user.password;
-            return {data:user, token, success: true };
+            return {token, success: true };
     
         } catch (error) {
             console.error(error);
-            return { error: "Error en la consulta a la bd", success: false };
+            return { Error: "Error en la consulta a la bd", success: false };
         }
     }
     

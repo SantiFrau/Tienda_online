@@ -38,7 +38,7 @@ export default class ProductController {
         try {
             const { id } = req.params;
             if (!id) {
-                return res.status(400).json({ error: "Product ID is required" });
+                return res.status(400).json({ Error: "Product ID is required" });
             }
 
             const product = await this.Model.Get_by_id({ id });
@@ -46,11 +46,11 @@ export default class ProductController {
             if (product.success) {
                 return res.status(200).json(product.data);
             } else {
-                return res.status(404).json({ error: "Not found" });
+                return res.status(404).json({ Error: "Not found" });
             }
         } catch (error) {
            
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ Error: "Internal Server Error" });
         }
     }
 
@@ -59,7 +59,7 @@ export default class ProductController {
             const { search } = req.params; 
     
             if (!search || search.trim() === "") {
-                return res.status(400).json({ error: "Search query is required" });
+                return res.status(400).json({ Error: "Search query is required" });
             }
     
             const products = await this.Model.SearchProducts({ search });
@@ -67,11 +67,11 @@ export default class ProductController {
             if (products.success) {
                 return res.status(200).json(products.data);
             } else {
-                return res.status(404).json({ error: "No products found" });
+                return res.status(404).json({ Error: "No products found" });
             }
         } catch (error) {
             
-            return res.status(500).json({ error: "Internal Server Error" });
+            return res.status(500).json({ Error: "Internal Server Error" });
         }
     }
     

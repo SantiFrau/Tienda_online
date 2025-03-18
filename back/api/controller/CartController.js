@@ -35,14 +35,14 @@ export default class CartController {
 
      CreateCart = async(req, res) => {
         try {
-            const { id } = req.params;
+            
             const products = req.body;
 
-            if (!Array.isArray(products) || products.length === 0) {
+            if (!Array.isArray(products.products) || products.products.length === 0) {
                 return res.status(400).json({ Error: "Lista de productos inválida" });
             }
 
-            const response = await this.Model.Create_cart({ user_id: id, products });
+            const response = await this.Model.Create_cart({ user_id: products.user_id, products:products.products });
 
             if (!response.success) {
                 return res.status(400).json({ Error: response.Error });
@@ -56,14 +56,14 @@ export default class CartController {
 
      UpdateCart = async(req, res) => {
         try {
-            const { id } = req.params;
+         
             const products = req.body;
 
-            if (!Array.isArray(products) || products.length === 0) {
+            if (!Array.isArray(products.products) || products.products.length === 0) {
                 return res.status(400).json({ error: "Lista de productos inválida" });
             }
 
-            const response = await this.Model.UpdateCart({ cart_id: id, products });
+            const response = await this.Model.UpdateCart({ cart_id: products.cart_id, products:products.products });
 
             if (!response.success) {
                 return res.status(404).json({ Error: response.Error });

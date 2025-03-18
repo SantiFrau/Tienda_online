@@ -59,6 +59,15 @@ export default class CartModel {
 
     static async Create_cart({ products, user_id }) {
         try {
+            const [userExists] = await conection.query(
+                `SELECT id FROM users WHERE id = ?`,
+                [user_id]
+              );
+              
+              if (userExists.length === 0) {
+                return { success: false, Error: "El usuario no existe" };
+              }
+
             // Crear el carrito y obtener su ID
             const [insertRes] = await conection.query(`INSERT INTO CARTS (user_id) VALUES (?)`, [user_id]);
             const cart_id = insertRes.insertId; // Obtiene el ID del carrito recién creado
@@ -135,4 +144,4 @@ export default class CartModel {
 
 //CartModel.Create_cart({products:[{product_id:1,quantity:10},{product_id:2,quantity:10}],user_id:"d2d06441-fdf5-11ef-a6e5-b42e99e9b2d5"})
 //CartModel.UpdateCart({cart_id:1,products:[{product_id:1,quantity:2},{product_id:4,quantity:30}]})
-CartModel.Get_by_id({user_id:"0b3d7070-01d5-11f0-a75f-b42e99e9b2d5"})
+//CartModel.Get_by_id({user_id:"0b3d7070-01d5-11f0-a75f-b42e99e9b2d5"})

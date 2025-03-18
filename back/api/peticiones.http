@@ -8,8 +8,66 @@ GET http://localhost:1234/products?limit=5&page=1
 ###
 GET http://localhost:1234/products/2
 
-#####
+##### 
 
 GET http://localhost:1234/products/search/Mens
 
 ####
+
+POST http://localhost:1234/users/register
+Content-Type: application/json
+
+{
+ "username":"santi",
+    "password":"123456",
+    "email":"santiago@gmail.com",
+    "firstname":"santiago",
+    "lastname":"frau",
+    "phone":"14513521351513"}
+
+
+######
+
+GET http://localhost:1234/users/validate-token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2MjZjOGEzLTA0NGMtMTFmMC1hNzNhLWI0MmU5OWU5YjJkNSIsImVtYWlsIjoic2FudGlhZ29AZ21haWwuY29tIiwidXNlcm5hbWUiOiJzYW50aSIsImZpcnN0bmFtZSI6InNhbnRpYWdvIiwibGFzdG5hbWUiOiJmcmF1IiwicGhvbmUiOiIxNDUxMzUyMTM1MTUxMyIsImlhdCI6MTc0MjMzOTUzNiwiZXhwIjoxNzQyMzQ2NzM2fQ.ah8IkccE4t4kNjBJK3aKCZVb_-ly2rplM0wTa_2uEhA
+
+######
+
+POST http://localhost:1234/users/login
+Content-Type: application/json
+
+{
+    "email":"santiago@gmail.com",
+    "password":"123456"
+}
+
+####
+
+GET http://localhost:1234/carts/7034a81d-044c-11f0-a73a-b42e99e9b2d5
+
+####
+
+POST http://localhost:1234/carts/Create
+Content-Type: application/json
+
+{
+  "products": [
+    {"product_id": 1, "quantity": 10},
+    {"product_id": 2, "quantity": 10}
+  ],
+  "user_id": "7626c8a3-044c-11f0-a73a-b42e99e9b2d5"
+}
+
+#####
+
+POST http://localhost:1234/carts/Update
+Content-Type: application/json
+
+{
+"cart_id":1,
+"products":[{"product_id":1,"quantity":2},{"product_id":4,"quantity":30}]
+}
+
+####
+
+DELETE http://localhost:1234/carts/Delete/5

@@ -9,9 +9,9 @@ export default function CreateCartsRoutes({AppModel}){
     
 
     router.get("/:id",C_controller.Get_by_user_id)
-    router.post("/Update/:id",C_controller.UpdateCart)
-    router.post("/Create/:id",C_controller.UpdateCart)
-    router.delete("/Delete/:id",C_controller.UpdateCart)
+    router.post("/Update",C_controller.UpdateCart)
+    router.post("/Create",C_controller.CreateCart)
+    router.delete("/Delete/:id",C_controller.DeleteCart)
     
 
 

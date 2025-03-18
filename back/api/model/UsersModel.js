@@ -21,9 +21,9 @@ export default class UsersModel{
         
         if(res.length<1){
            
-           return {Error:"Usuario no encontrado",succes:false}
+           return {Error:"Usuario no encontrado",success:false}
         } else{
-            return {data:"Usuario existente",succes:true}
+            return {data:"Usuario existente",success:true}
         }
      
       //funcion modifcada pra que solo devuelva si existe el ususario
@@ -49,7 +49,7 @@ export default class UsersModel{
         }
         catch{
              
-            return {Error:"Error en la query a la bd",succes:false}
+            return {Error:"Error en la query a la bd",success:false}
 
         }
         
@@ -57,6 +57,7 @@ export default class UsersModel{
 
     static async Create_user({data}){
         try{
+           
             const user= {...data , password: await argon2.hash(data.password)}
       
             const [uuid_result] = await conection.query("SELECT UUID() uuid;")
@@ -67,11 +68,11 @@ export default class UsersModel{
             INSERT INTO users (id, email, username, password, firstname, lastname, phone) 
             VALUES 
             (?, ?, ? , ?, ?, ? ,?);`,[uuid,user.email,user.username,user.password,user.firstname,user.lastname,user.phone])
-      
+             
             // Generar un token JWT
             const token = jwt.sign(
                 { 
-                    id: user.id, 
+                    id: uuid, 
                     email: user.email, 
                     username: user.username, 
                     firstname: user.firstname,
@@ -82,12 +83,15 @@ export default class UsersModel{
                 { expiresIn: "2h" }
             );
           
-            delete user.password
+        
            
-           return {token,succes:true}
+           return {token,success:true}
         }
-        catch{
-            return {Error:"Error en la consulta",succes:false}
+        catch(error){
+             
+            //ER_DUP_ENTRY email duplicado
+            //console.log(error.code)
+            return {Error:error.code,success:false}
         }
         
       
@@ -106,7 +110,7 @@ export default class UsersModel{
     
             const user = result[0];
 
-            user.password= await argon2.hash(user.password) //hashea contraseña de la bd porq no estan hasheados los usuarios de prueba(temporal)
+           
 
             // Comparar la contraseña con la almacenada en la DB
             const passwordMatch = await argon2.verify(user.password, password);
@@ -128,7 +132,7 @@ export default class UsersModel{
                 { expiresIn: "2h" }
             );
     
-            delete user.password;
+            
             return {token, success: true };
     
         } catch (error) {

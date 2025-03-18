@@ -1,4 +1,6 @@
 import validateUserData from "../Schemas/user.js";
+import jwt from "jsonwebtoken"
+const secret_var="A2Tg7d9#Qw4DpKmz2+S3sE!a9pH2xJ6bV!6Yd4t9#"
 
 export default class UsersController {
     constructor({ AppModel }) {
@@ -33,9 +35,10 @@ export default class UsersController {
                 });
 
             } else {
-                return res.status(500).json({ Error: "No se pudo crear el usuario" });
+                return res.status(500).json({ message: "No se pudo crear el usuario" , Error:newUser.Error });
             }
         } catch (error) {
+            
             return res.status(500).json({ Error: "Error interno del servidor" });
         }
     }
@@ -78,7 +81,8 @@ export default class UsersController {
             });
 
         } catch (error) {
-            
+             
+            console.log(error)
             return res.status(500).json({ error: "Error interno del servidor" });
         }
     }

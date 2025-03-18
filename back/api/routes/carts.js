@@ -8,7 +8,11 @@ export default function CreateCartsRoutes({AppModel}){
     const C_controller = new CartController({AppModel:AppModel})
     
 
-    router.use("/:user_id",C_controller.Get_by_user_id)
+    router.get("/:id",C_controller.Get_by_user_id)
+    router.post("/Update/:id",C_controller.UpdateCart)
+    router.post("/Create/:id",C_controller.UpdateCart)
+    router.delete("/Delete/:id",C_controller.UpdateCart)
+    
 
 
     return router

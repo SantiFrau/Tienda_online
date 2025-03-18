@@ -1,6 +1,7 @@
 import  express  from "express";
 import CreateUserRouter from "./routes/users.js";
 import CreateProductsRouter from "./routes/products.js";
+import CreateCartsRoutes from "./routes/carts.js";
 
 export default function CreateApp({AppModel}){
 
@@ -8,6 +9,7 @@ export default function CreateApp({AppModel}){
     const server = express();
     const user_Routes = CreateUserRouter({AppModel})
     const products_Routes = CreateProductsRouter({AppModel})
+    const carts_Routes = CreateCartsRoutes({AppModel})
     server.disable("x-powered-by")
 
     server.use(express.json()); //midleware para combertir los metodo post que venga y acceder directamente al cuerpo
@@ -22,6 +24,7 @@ export default function CreateApp({AppModel}){
 
     server.use("/products",products_Routes);
     server.use("/users",user_Routes);
+    server.use("/carts",carts_Routes);
 
     server.listen(PORT,()=>{
         console.log(`http://localhost:${PORT}`)

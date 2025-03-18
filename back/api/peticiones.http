@@ -1,0 +1,15 @@
+GET http://localhost:1234/products
+
+####
+GET http://localhost:1234/products?category=men's clothing
+###
+GET http://localhost:1234/products?limit=5&page=1
+
+###
+GET http://localhost:1234/products/2
+
+#####
+
+GET http://localhost:1234/products/search/Mens
+
+####

@@ -18,11 +18,11 @@ export default class ProductModel {
         const [res] = await  conection.query(`
         SELECT id,title,price,description,category,image FROM products`)
       
-       return {data:[...res] , succes:true}
+       return {data:[...res] , success:true}
 
       }
       catch{
-        return {Error:"Error en la query a la bd",succes:false}
+        return {Error:"Error en la query a la bd",success:false}
       }
     }
    
@@ -35,11 +35,11 @@ export default class ProductModel {
        
         if(res.length<1){
           
-          return {Error:"Producto no encontrado",succes:false}
+          return {Error:"Producto no encontrado",success:false}
 
         } else{
          
-        return {data:[...res] , succes:true}
+        return {data:[...res] , success:true}
 
         }
         
@@ -60,18 +60,18 @@ export default class ProductModel {
      
       if(res.length<1){
         
-        return {Error:"Esta categoria no existe",succes:false}
+        return {Error:"Esta categoria no existe",success:false}
 
       } else{
        
-      return {data:[...res] , succes:true}
+      return {data:[...res] , success:true}
 
       }
       
     }
     catch{
          
-         return {Error:"Error en la query a bd",succes:false}
+         return {Error:"Error en la query a bd",success:false}
     }
          
 
@@ -80,6 +80,12 @@ export default class ProductModel {
 
    static async Get_limit({ limit, page }) {
     try {
+        limit = parseInt(limit, 10);
+        page = parseInt(page, 10);
+
+        if (isNaN(limit) || isNaN(page) || limit <= 0 || page <= 0) {
+            return { Error: "Invalid limit or page", success: false };
+        }
   
         // Calcular el offset para paginación
         const offset = (page - 1) * limit;

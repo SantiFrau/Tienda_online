@@ -2,11 +2,13 @@
 
 export default class ProductController {
     constructor({ AppModel }) {
+       
         this.Model = AppModel.ProductModel;
+        
     }
 
-    async GetAll(req, res) {
-
+     GetAll = async (req, res)  =>  {
+    
         try {
             let products;
             const { category, limit, page } = req.query;
@@ -16,16 +18,16 @@ export default class ProductController {
 
             } else if (limit && page) {
             
-
-                products = await this.Model.Get_limit({ limit,page });
+                 console.log("a")
+                products = await this.Model.Get_limit({ limit:limit,page:page });
             } else {
-                products = await this.Model.GetAll();
+                products = await this.Model.Get_all();
             }
 
             if (products.success) {
                 return res.status(200).json(products.data);
             } else {
-                return res.status(404).json({ Error: "Not found" });
+                return res.status(404).json(products);
             }
         } catch (error) {
             
@@ -34,7 +36,7 @@ export default class ProductController {
         }
     }
 
-    async Get_by_id(req, res) {
+     Get_by_id = async(req, res) => {
         try {
             const { id } = req.params;
             if (!id) {
@@ -54,7 +56,7 @@ export default class ProductController {
         }
     }
 
-    async Search(req, res) {
+   Search = async(req, res) => {
         try {
             const { search } = req.params; 
     

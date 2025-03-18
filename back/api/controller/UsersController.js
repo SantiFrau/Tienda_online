@@ -5,13 +5,13 @@ export default class UsersController {
         this.Model = AppModel.UsersModel;
     }
 
-    async Register(req, res) {
+    Register = async(req, res)=> {
         try {
             const user = req.body;
 
             // Validar datos antes de consultar la base de datos
             const userValidation = validateUserData(user);
-            if (!userValidation.success) {
+            if (!userValidation.success) {                           
                 return res.status(400).json({ 
                     Error: "Datos del usuario inválidos", 
                     details: userValidation.errors 
@@ -40,7 +40,7 @@ export default class UsersController {
         }
     }
 
-    async Login(req, res) {
+     Login = async(req, res)=> {
         try {
             const { email, password } = req.body;
 
@@ -61,7 +61,7 @@ export default class UsersController {
         }
     }
 
-    async ValidateToken(req, res) {
+   ValidateToken = async(req, res)=> {
         try {
             const token = req.headers.authorization?.split(" ")[1]; // Extraer token del header
 

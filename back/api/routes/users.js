@@ -6,8 +6,9 @@ export default function CreateUserRouter({AppModel}){
     const U_controller = new UsersController({AppModel:AppModel})
     const router = Router()
 
-    router.get("/",U_controller.GetAll)
-    router.get("/:username",U_controller.Get_by_username)
+    router.get("/login",U_controller.Login)
+    router.post("/register",U_controller.Register)
+    router.get("/validate-token",U_controller.ValidateToken)
 
     return router
 }

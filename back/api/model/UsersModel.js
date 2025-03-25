@@ -55,52 +55,72 @@ export default class UsersModel{
         
     }
 
-    static async Create_user({data}){
-        try{
-           
-            const user= {...data , password: await argon2.hash(data.password)}
-      
-            const [uuid_result] = await conection.query("SELECT UUID() uuid;")
-            const [{uuid}] = uuid_result
-      
-            
+    static async Create_user({ data }) {
+        try {
+            const user = { ...data, password: await argon2.hash(data.password) };
+    
+            const [uuid_result] = await conection.query("SELECT UUID() uuid;");
+            const [{ uuid }] = uuid_result;
+    
+            // Insertar usuario en la base de datos
             const res = await conection.query(`
-            INSERT INTO users (id, email, username, password, firstname, lastname, phone) 
-            VALUES 
-            (?, ?, ? , ?, ?, ? ,?);`,[uuid,user.email,user.username,user.password,user.firstname,user.lastname,user.phone])
-             
+                INSERT INTO users (id, email, username, password, firstname, lastname, phone) 
+                VALUES (?, ?, ?, ?, ?, ?, ?);
+            `, [uuid, user.email, user.username, user.password, user.firstname, user.lastname, user.phone]);
+    
+            // Obtener la dirección del usuario
+            const [addressResult] = await conection.query(`
+                SELECT 
+                    c.name AS city,
+                    a.number,
+                    s.name AS street,
+                    a.zipcode
+                FROM addresses a
+                JOIN cities c ON a.city_id = c.id
+                JOIN streets s ON a.street_id = s.id
+                WHERE a.user_id = ?;
+            `, [uuid]);
+    
+            // Estructurar la dirección y reemplazar campos vacíos por "No definido"
+            const address = addressResult.length > 0 ? {
+                city: addressResult[0].city || "No definido",
+                number: addressResult[0].number || "No definido",
+                street: addressResult[0].street || "No definido",
+                zipcode: addressResult[0].zipcode || "No definido"
+            } : {
+                city: "No definido",
+                number: "No definido",
+                street: "No definido",
+                zipcode: "No definido"
+            };
+    
             // Generar un token JWT
             const token = jwt.sign(
-                { 
-                    id: uuid, 
-                    email: user.email, 
-                    username: user.username, 
+                {
+                    id: uuid,
+                    email: user.email,
+                    username: user.username,
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    phone: user.phone
-                }, 
-                secret_var, 
+                    phone: user.phone,
+                    address: address
+                },
+                secret_var,
                 { expiresIn: "2h" }
             );
-          
-        
-           
-           return {token,success:true}
+    
+            return { token, success: true };
+        } catch (error) {
+            console.error(error);
+            return { Error: error.code, success: false };
         }
-        catch(error){
-             
-            //ER_DUP_ENTRY email duplicado
-            //console.log(error.code)
-            return {Error:error.code,success:false}
-        }
-        
-      
     }
+    
 
     static async Login_user({ email, password }) {
         try {
             const [result] = await conection.query(
-                `SELECT id, email, username, password, firstname, lastname, phone FROM users WHERE email = ?`, 
+                `SELECT id, email, username, password, firstname, lastname, phone FROM users WHERE email = ?`,
                 [email]
             );
     
@@ -109,31 +129,55 @@ export default class UsersModel{
             }
     
             const user = result[0];
-
-           
-
+    
             // Comparar la contraseña con la almacenada en la DB
             const passwordMatch = await argon2.verify(user.password, password);
             if (!passwordMatch) {
                 return { Error: "Contraseña incorrecta", success: false };
             }
     
+            // Obtener la dirección del usuario
+            const [addressResult] = await conection.query(`
+                SELECT 
+                    c.name AS city,
+                    a.number,
+                    s.name AS street,
+                    a.zipcode
+                FROM addresses a
+                JOIN cities c ON a.city_id = c.id
+                JOIN streets s ON a.street_id = s.id
+                WHERE a.user_id = ?;
+            `, [user.id]);
+    
+            // Estructurar la dirección y reemplazar campos vacíos por "No definido"
+            const address = addressResult.length > 0 ? {
+                city: addressResult[0].city || "No definido",
+                number: addressResult[0].number || "No definido",
+                street: addressResult[0].street || "No definido",
+                zipcode: addressResult[0].zipcode || "No definido"
+            } : {
+                city: "No definido",
+                number: "No definido",
+                street: "No definido",
+                zipcode: "No definido"
+            };
+    
             // Generar un token JWT
             const token = jwt.sign(
-                { 
-                    id: user.id, 
-                    email: user.email, 
-                    username: user.username, 
+                {
+                    id: user.id,
+                    email: user.email,
+                    username: user.username,
                     firstname: user.firstname,
                     lastname: user.lastname,
-                    phone: user.phone
-                }, 
-                secret_var, 
+                    phone: user.phone,
+                    address: address
+                },
+                secret_var,
                 { expiresIn: "2h" }
             );
     
-            
-            return {token, success: true };
+            return { token, success: true };
     
         } catch (error) {
             console.error(error);
@@ -141,7 +185,9 @@ export default class UsersModel{
         }
     }
     
+    
 }
+
 /*
 UsersModel.Create_user({ data:{
     username:"hola",
@@ -152,4 +198,4 @@ UsersModel.Create_user({ data:{
     phone:"14513"}
 })*/
 
-//console.log(await UsersModel.Login_user({email:"john@gmail.com",password:"m38rmF$"}))
+//console.log(await UsersModel.Login_user({email:"santiago@gmail.com",password:"123456"}))

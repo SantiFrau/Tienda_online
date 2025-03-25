@@ -6,6 +6,7 @@ import { UserProvider } from "./components/context";
 import Notfound from "./components/NotFound";
 import User from "./components/user";
 import Cart from "./components/cart";
+import Register from "./components/register";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     <Routes>
 
        <Route path="/" index element={<Login></Login>}></Route>
+       <Route path="/register" index element={<Register></Register>}></Route>
 
        <Route element={<Layout ></Layout>} path="/products">
           

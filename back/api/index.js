@@ -1,32 +1,34 @@
-import  express  from "express";
+import express from "express";
+import cors from "cors";
 import CreateUserRouter from "./routes/users.js";
 import CreateProductsRouter from "./routes/products.js";
 import CreateCartsRoutes from "./routes/carts.js";
 
-export default function CreateApp({AppModel}){
-
-    const PORT = process.env.PORT || 1234
+export default function CreateApp({ AppModel }) {
+    const PORT = process.env.PORT || 1234;
     const server = express();
-    const user_Routes = CreateUserRouter({AppModel})
-    const products_Routes = CreateProductsRouter({AppModel})
-    const carts_Routes = CreateCartsRoutes({AppModel})
-    server.disable("x-powered-by")
 
-    server.use(express.json()); //midleware para combertir los metodo post que venga y acceder directamente al cuerpo
+    server.disable("x-powered-by");
 
+    // Middleware para habilitar CORS correctamente
+    server.use(cors({
+        origin: "*", // Puedes cambiar esto a tu frontend específico
+        methods: ["GET", "POST", "DELETE", "PATCH"],
+        allowedHeaders: ["Content-Type", "Authorization"]
+    }));
 
-     server.options("/movies",(req,res)=>{ //coors
-        res.header("Access-Control-Allow-Origin","*") //se le agrega al options tambien porque estos
-        res.header("Access-Control-Allow-Methods","GET , POST , DELETE , PATCH")
-        //se le agrega a que tiene acceso la ruta
-        res.send() //termninar la peticion
-    })
+    server.use(express.json()); // Middleware para interpretar JSON en el body
 
-    server.use("/products",products_Routes);
-    server.use("/users",user_Routes);
-    server.use("/carts",carts_Routes);
+    const user_Routes = CreateUserRouter({ AppModel });
+    const products_Routes = CreateProductsRouter({ AppModel });
+    const carts_Routes = CreateCartsRoutes({ AppModel });
+    // Definir rutas
+    server.use("/products", products_Routes);
+    server.use("/users", user_Routes);
+    server.use("/carts", carts_Routes);
 
-    server.listen(PORT,()=>{
-        console.log(`http://localhost:${PORT}`)
-    })
+    server.listen(PORT, () => {
+        console.log(`http://localhost:${PORT}`);
+    });
 }
+

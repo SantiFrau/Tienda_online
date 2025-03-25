@@ -14,11 +14,11 @@ export default class ProductController {
             const { category, limit, page } = req.query;
 
             if (category) {
-                products = await this.Model.Get_by_category({ category });
+                products = await this.Model.Get_by_category({ category , page , limit });
 
             } else if (limit && page) {
             
-                 console.log("a")
+                
                 products = await this.Model.Get_limit({ limit:limit,page:page });
             } else {
                 products = await this.Model.Get_all();

@@ -23,7 +23,7 @@ export default class UsersController {
             // Verificar si el usuario ya existe
             const exist = await this.Model.Get_user_by_email({ email: user.email });
             if (exist.success) {  
-                return res.status(409).json({ Error: "El usuario ya está registrado" });
+                return res.status(409).json({ Error: "El usuario ya está registrado" , success:false });
             }
 
             // Crear usuario
@@ -31,15 +31,16 @@ export default class UsersController {
 
             if (newUser.success) {
                 return res.status(201).json({ 
-                    token: newUser.token 
+                    token: newUser.token,
+                    success:true
                 });
 
             } else {
-                return res.status(500).json({ message: "No se pudo crear el usuario" , Error:newUser.Error });
+                return res.status(500).json({ message: "No se pudo crear el usuario" , Error:newUser.Error , success:false });
             }
         } catch (error) {
             
-            return res.status(500).json({ Error: "Error interno del servidor" });
+            return res.status(500).json({ Error: "Error interno del servidor" ,success:false});
         }
     }
 
@@ -48,19 +49,19 @@ export default class UsersController {
             const { email, password } = req.body;
 
             if (!email || !password) {
-                return res.status(400).json({ Error: "Email y contraseña son obligatorios" });
+                return res.status(400).json({ Error: "Email y contraseña son obligatorios" ,success:false });
             }
 
             const userResponse = await this.Model.Login_user({ email, password });
 
             if (!userResponse.success) {
-                return res.status(401).json({ Error: userResponse.Error });
+                return res.status(401).json({ Error: userResponse.Error ,success:false });
             }
 
-            return res.status(200).json({token:userResponse.token});
+            return res.status(200).json({token:userResponse.token , success:true});
         } catch (error) {
             
-            return res.status(500).json({ Error: "Error interno del servidor" });
+            return res.status(500).json({ Error: "Error interno del servidor" , success:false });
         }
     }
 
@@ -69,12 +70,12 @@ export default class UsersController {
             const token = req.headers.authorization?.split(" ")[1]; // Extraer token del header
 
             if (!token) {
-                return res.status(401).json({ Error: "Token no proporcionado" });
+                return res.status(401).json({ Error: "Token no proporcionado" ,success:false });
             }
 
             jwt.verify(token, secret_var, (err, decoded) => {
                 if (err) {
-                    return res.status(401).json({ error: "Token inválido o expirado" });
+                    return res.status(401).json({ error: "Token inválido o expirado" ,success:false });
                 }
 
                 return res.status(200).json({ success: true, data: decoded });
@@ -83,7 +84,7 @@ export default class UsersController {
         } catch (error) {
              
             console.log(error)
-            return res.status(500).json({ error: "Error interno del servidor" });
+            return res.status(500).json({ error: "Error interno del servidor" ,success:false});
         }
     }
 }

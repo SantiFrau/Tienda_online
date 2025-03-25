@@ -51,31 +51,34 @@ export default class ProductModel {
            
    }
    
-   static async Get_by_category ({category}){
-      
-    try{
-      const [res] = await conection.query(`
-      SELECT id,title,price,description,category,image FROM products WHERE category = ?
-      `,[category])
-     
-      if(res.length<1){
-        
-        return {Error:"Esta categoria no existe",success:false}
+   static async Get_by_category ({category, limit, page}) {
+    try {
+        limit = parseInt(limit, 10);
+        page = parseInt(page, 10);
 
-      } else{
-       
-      return {data:[...res] , success:true}
+        if (!category || isNaN(limit) || isNaN(page) || limit <= 0 || page <= 0) {
+            return { Error: "Invalid category, limit or page", success: false };
+        }
 
-      }
-      
+        const offset = (page - 1) * limit;
+
+        const [res] = await conection.query(`
+            SELECT id, title, price, description, category, image 
+            FROM products 
+            WHERE category = ? 
+            ORDER BY id ASC 
+            LIMIT ? OFFSET ?;
+        `, [category, limit, offset]);
+
+        if (res.length < 1) {
+            return { Error: "No hay más productos en esta categoría", success: false };
+        }
+
+        return { data: res, success: true };
+    } catch (error) {
+        return { Error: "Error en la query a la bd", success: false };
     }
-    catch{
-         
-         return {Error:"Error en la query a bd",success:false}
-    }
-         
-
-   }
+}
 
 
    static async Get_limit({ limit, page }) {

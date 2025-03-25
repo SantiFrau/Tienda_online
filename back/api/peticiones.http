@@ -1,7 +1,7 @@
 GET http://localhost:1234/products
 
 ####
-GET http://localhost:1234/products?category=men's clothing
+GET http://localhost:1234/products?category=men's clothing&limit=2&page=1
 ###
 GET http://localhost:1234/products?limit=5&page=1
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 ######
 
 GET http://localhost:1234/users/validate-token
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2MjZjOGEzLTA0NGMtMTFmMC1hNzNhLWI0MmU5OWU5YjJkNSIsImVtYWlsIjoic2FudGlhZ29AZ21haWwuY29tIiwidXNlcm5hbWUiOiJzYW50aSIsImZpcnN0bmFtZSI6InNhbnRpYWdvIiwibGFzdG5hbWUiOiJmcmF1IiwicGhvbmUiOiIxNDUxMzUyMTM1MTUxMyIsImlhdCI6MTc0MjMzOTUzNiwiZXhwIjoxNzQyMzQ2NzM2fQ.ah8IkccE4t4kNjBJK3aKCZVb_-ly2rplM0wTa_2uEhA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc2MjZjOGEzLTA0NGMtMTFmMC1hNzNhLWI0MmU5OWU5YjJkNSIsImVtYWlsIjoic2FudGlhZ29AZ21haWwuY29tIiwidXNlcm5hbWUiOiJzYW50aSIsImZpcnN0bmFtZSI6InNhbnRpYWdvIiwibGFzdG5hbWUiOiJmcmF1IiwicGhvbmUiOiIxNDUxMzUyMTM1MTUxMyIsImFkZHJlc3MiOnt9LCJpYXQiOjE3NDI5MzcwODksImV4cCI6MTc0Mjk0NDI4OX0.OybR0N7P12fJanNOHGPn60fcr-D3rQFTjdtLB5jnzYE
 
 ######
 

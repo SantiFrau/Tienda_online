@@ -20,17 +20,25 @@ export default function Cart() {
     async function get() {
         if (!user || !user.id) return;
         const c = await get_cart(user.id);
-        setCart(c);
+        
+        if(c.Error){
+            return
+        }
+
+        setCart(c.carts);
 
         // Cargar productos en paralelo
         const productData = {};
-        for (const cItem of c) {
+        for (const cItem of c.carts) {
             for (const prod of cItem.products) {
-                if (!productData[prod.productId]) {
-                    productData[prod.productId] = await get_prod(prod.productId);
+                
+                if (!productData[prod.product_id]) {
+                    const [p] = await get_prod(prod.product_id);
+                    productData[prod.product_id] = p
                 }
             }
         }
+        
         setProducts(productData);
     }
 
@@ -40,13 +48,14 @@ export default function Cart() {
                 <div>
                     {cart.map((cItem, index) => {
                         let totalPedido = 0; // <-- Total por cada pedido
+                        console.log(cItem)
                         return (
                             <div className="w-full flex flex-col gap-5 md:p-10" key={index}>
                                 <h5 className="w-full text-center font-bold text-xl">
-                                    Pedido: {cItem.id}
+                                    Pedido: {cItem.cart_id}
                                 </h5>
                                 {cItem.products.map((prod, i) => {
-                                    const product = products[prod.productId]; // Accede al producto cargado
+                                    const product = products[prod.product_id]; // Accede al producto cargado
                                     const totalProducto = (product?.price || 0) * prod.quantity;
                                     totalPedido += totalProducto; // <-- Acumula el total del pedido
                                     

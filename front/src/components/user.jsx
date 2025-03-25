@@ -7,15 +7,16 @@ export default function User(){
 
     const {user,setUser} = useContext(UserContext)
     let navigate = useNavigate()
-
+    
     function handleclick (){
       setUser(false)
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
     useEffect(()=>{
        if(!user){
         navigate("/")
        }
+      
     },[user])
 
     return (

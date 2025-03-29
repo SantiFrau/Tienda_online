@@ -14,6 +14,10 @@ GET http://localhost:1234/products/search/Mens
 
 ####
 
+GET http://localhost:1234/products/categories
+
+####
+
 POST http://localhost:1234/users/register
 Content-Type: application/json
 
@@ -43,7 +47,7 @@ Content-Type: application/json
 
 ####
 
-GET http://localhost:1234/carts/7034a81d-044c-11f0-a73a-b42e99e9b2d5
+GET http://localhost:1234/carts/8278d549-09ce-11f0-a4c2-b42e99e9b2d5
 
 ####
 
@@ -55,7 +59,7 @@ Content-Type: application/json
     {"product_id": 1, "quantity": 10},
     {"product_id": 2, "quantity": 10}
   ],
-  "user_id": "7626c8a3-044c-11f0-a73a-b42e99e9b2d5"
+  "user_id": "8278d549-09ce-11f0-a4c2-b42e99e9b2d5"
 }
 
 #####

@@ -18,7 +18,7 @@ export async function get_prods_by_category({category ,page,limit}){
 }
 
 export async function get_categories(){
-    return await fetch('https://fakestoreapi.com/products/categories')
+    return await fetch('http://localhost:1234/products/categories')
     .then(res=>res.json())
     .then(json=>json)
 }
@@ -69,12 +69,24 @@ export async function Create_user(data){
           return token
 }
 
+export async function get_cart(id) {
+    try {
+        const response = await fetch(`http://localhost:1234/carts/${id}`);
 
-export async function get_cart(id){
-    return await fetch(`http://localhost:1234/carts/${id}`)
-    .then(res=>res.json())
-    .then(json=>json)
+        if (response.status === 404) {
+           
+            return null; 
+        }
+
+
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log("Error en get_cart:", error.message);
+        return null; 
+    }
 }
+
 
 export async function get_prod(id){
     return await fetch(`http://localhost:1234/products/${id}`)
@@ -88,3 +100,30 @@ export async function search(name){
     .then(res=>res.json())
     .then(json=>json)
 }
+
+export async function createCart(cart){
+    const res = await fetch("http://localhost:1234/carts/Create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // Especifica que envías JSON
+            },
+            body: JSON.stringify(cart) // Convierte el objeto a JSON
+        }).then(res=>res.json())
+          .then(json=>json);
+
+          return res.success
+}
+
+export async function updateCart(cart){
+    const res = await fetch("http://localhost:1234/carts/Update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json" // Especifica que envías JSON
+            },
+            body: JSON.stringify(cart) // Convierte el objeto a JSON
+        }).then(res=>res.json())
+          .then(json=>json);
+
+          return res.success
+}
+

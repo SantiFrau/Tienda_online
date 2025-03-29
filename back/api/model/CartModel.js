@@ -13,7 +13,7 @@ export default class CartModel {
    
     static async Get_by_id({ user_id }) {
         try {
-            // Obtener todos los carritos del usuario
+            // Obtener el carrito del usuario
             const [cartResult] = await conection.query(
                 `SELECT id FROM carts WHERE user_id = ?`,
                 [user_id]
@@ -23,20 +23,16 @@ export default class CartModel {
                 return { success: false, Error: "No se encontró un carrito para este usuario." };
             }
     
-            // Para cada carrito, obtener los productos
-            const cartsWithProducts = await Promise.all(cartResult.map(async (cart) => {
-                const [cartItems] = await conection.query(
-                    `SELECT product_id, quantity FROM cart_items WHERE cart_id = ?`,
-                    [cart.id]
-                );
-               
-                return { cart_id: cart.id, products: cartItems };
-            }));
-             
-            
-            return { success: true, data: { user_id, carts: cartsWithProducts } };
+            const cart_id = cartResult[0].id;
+    
+            // Obtener los productos del carrito
+            const [cartItems] = await conection.query(
+                `SELECT product_id, quantity FROM cart_items WHERE cart_id = ?`,
+                [cart_id]
+            );
+    
+            return { success: true, data: { cart_id, products: cartItems } };
         } catch (error) {
-            
             return { success: false, Error: "Error en la consulta a la BD" };
         }
     }

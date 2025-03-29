@@ -16,9 +16,16 @@ export default function Login() {
     
             if (storedToken) {
                 const initialUser = await validar_token(storedToken);
-              
-                setUser(initialUser.data);
+
+                if(initialUser.success){
+                    setUser(initialUser.data);
                 navigate("/products");
+                }else{
+                    localStorage.removeItem("token")
+                    navigate("/")
+                }
+              
+                
             }
         };
     

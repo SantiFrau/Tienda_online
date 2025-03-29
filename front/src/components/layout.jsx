@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function Layout() {
     const [categorias, setCategorias] = useState([]);
-    const { user, categoria, setCategoria, setSearch } = useContext(UserContext);
+    const { user, categoria, setCategoria, setSearch , cart } = useContext(UserContext);
     const [menu, setMenu] = useState(false);
     const searchInputRef = useRef();
 
@@ -22,8 +22,9 @@ export default function Layout() {
 
     async function get() {
         const categorias = await get_categories();
-        categorias.unshift("all");
-        setCategorias(categorias);
+        const nombresCategorias = categorias.map(categoria => categoria.name);  
+        
+        setCategorias(nombresCategorias);  
     }
 
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function Layout() {
     return (
         <>
             {/* Barra de navegación para pantallas grandes */}
-            <nav className="z-10 lg:flex w-3/4 bg-gray-800 fixed p-2 top-0 right-0 hidden flex-row justify-center items-center py-4">
+            <nav className="z-10 lg:flex w-3/4 bg-gray-800 fixed p-2 top-0 right-0 hidden flex-row justify-around items-center py-4">
                 <div className="relative w-1/3">
                     <input
                         ref={searchInputRef}
@@ -48,6 +49,7 @@ export default function Layout() {
                         <SearchIcon className="text-white" />
                     </button>
                 </div>
+                        
             </nav>
 
             {/* Barra de navegación para pantallas pequeñas */}
@@ -168,7 +170,7 @@ export default function Layout() {
                 <div className="w-1/4 h-screen hidden lg:block"></div>
                 <div className="w-full lg:w-3/4 h-max flex flex-col">
                     <Outlet />
-                    <Footer />
+                    
                 </div>
             </aside>
         </>

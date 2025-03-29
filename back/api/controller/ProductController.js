@@ -76,5 +76,21 @@ export default class ProductController {
             return res.status(500).json({ Error: "Internal Server Error" });
         }
     }
-    
+
+    GetCategories = async (req, res) => {
+       
+        try {
+            // Llamar al método GetCategories del modelo
+            const categories = await this.Model.get_categories();
+            if (categories.success) {
+                return res.status(200).json(categories.data);
+            } else {
+                return res.status(404).json({ Error: "No hay categorías" });
+            }
+        } catch (error) {
+            return res.status(500).json({ Error: "Internal Server Error" });
+        }
+    }
 }
+    
+
